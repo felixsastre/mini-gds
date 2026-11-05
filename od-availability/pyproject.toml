@@ -1,0 +1,33 @@
+[project]
+name = "od-availability"
+version = "0.1.0"
+description = "Origin-and-destination availability: net contribution from market fare value and leg bid prices."
+readme = "README.md"
+authors = [
+    { name = "Felix Sastre", email = "2602673+felixsastre@users.noreply.github.com" }
+]
+requires-python = ">=3.12"
+dependencies = []
+
+[build-system]
+requires = ["uv_build>=0.13.7,<0.14.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "hypothesis>=6.170.14",
+    "pytest>=9.2.0",
+    "pytest-bdd>=9.0.1",
+    "ruff>=0.17.3",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+bdd_features_base_dir = "features"
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]

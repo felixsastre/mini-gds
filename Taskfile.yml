@@ -1,0 +1,51 @@
+# Commands from the root of the repository. Needs: task, uv, go and the Temporal CLI.
+version: '3'
+
+tasks:
+  default:
+    silent: true
+    cmds:
+      - task --list
+
+  test:
+    desc: Unit tests, lint and format check of every project
+    cmds:
+      - for: [inventory-nesting, od-availability, offer-engine, booking-domain, mini-gds]
+        task: python-checks
+        vars: { DIR: '{{.ITEM}}' }
+      - for: [availability-cache, mini-gds/cache]
+        task: go-checks
+        vars: { DIR: '{{.ITEM}}' }
+
+  up:
+    desc: Start the whole mini GDS as local processes (Ctrl-C stops it)
+    dir: mini-gds
+    cmds:
+      - ./scripts/dev.sh
+
+  e2e:
+    desc: Start the system, run the end-to-end tests (about two minutes) and stop it
+    dir: mini-gds
+    cmds:
+      - ./scripts/e2e.sh
+
+  check:
+    desc: Everything - the tests of every project, then the end-to-end run
+    cmds:
+      - task: test
+      - task: e2e
+
+  python-checks:
+    internal: true
+    dir: '{{.DIR}}'
+    cmds:
+      - uv run pytest -q
+      - uv run ruff check
+      - uv run ruff format --check
+
+  go-checks:
+    internal: true
+    dir: '{{.DIR}}'
+    cmds:
+      - go vet ./...
+      - go test -race ./...

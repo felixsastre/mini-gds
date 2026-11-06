@@ -4,6 +4,12 @@ Format: [Keep a Changelog](https://keepachangelog.com/). Edits to a `.feature` g
 
 ## [Unreleased]
 
+### Fixed
+- `api`: `PUT /admin/catalog` replaced the route and the listings in two steps, so a search in another thread could see a new route with the old listings. The catalog is now one immutable value swapped in a single assignment.
+
+### Removed
+- `hypothesis` from the dev dependencies of `mini-gds`; nothing used it.
+
 ### Added
 - Behavior specs: `features/search.feature` and `features/reservation.feature`.
 - `host` service: seats per flight and class on top of `inventory-nesting`, capped at 9.

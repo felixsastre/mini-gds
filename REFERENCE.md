@@ -38,3 +38,15 @@ curl -X POST localhost:18080/reservations/<id>/payment -H 'content-type: applica
 ```
 
 The hold lasts 15 minutes unless `HOLD_SECONDS` says otherwise. See [`mini-gds`](mini-gds/) for the services, ports and endpoints.
+
+## The `/admin` endpoints
+
+The `host`, the `api` and the `cache` each have `/admin` endpoints. They set up the data (seats, the catalog, values and bid prices), make a class stop answering, and reset the state. The tests and the walkthrough above use them.
+
+**They have no authentication.** They are served by the same app as the public endpoints, and anyone who can reach the port can change or erase the data. `task up` binds every service to `127.0.0.1`, which is the only protection: do not bind them to another address and do not expose them to a network.
+
+## Known limits
+
+- The `api` catalog is one route, replaced as a whole by each `PUT /admin/catalog`.
+- Selling a connection does not check its market value again after the search.
+- A Temporal unit test (`tests/unit/test_temporal_reservations.py`, `test_reservation_workflow.py`) failed in its setup in a few runs right after the lock file was rebuilt and could not be reproduced afterwards, so its cause is unknown. The end-to-end tests use real waits and take about two minutes.

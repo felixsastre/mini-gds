@@ -30,6 +30,10 @@ Each project starts from a description of its behavior written in plain English,
 | [`booking-domain`](booking-domain/) | Python | What a booking, a ticket and a receipt for extras are, and how the status of each flight is tracked |
 | [`mini-gds`](mini-gds/) | Python, Go | All of the above running together: search, offers, reservation and payment |
 
+## License
+
+[MIT](LICENSE).
+
 ## Running it
 
 Running the whole system needs a few tools installed. [`REFERENCE.md`](REFERENCE.md) lists them, gives the commands and has a walkthrough with example requests.

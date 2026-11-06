@@ -1,7 +1,7 @@
 """The gateway: catalog, search and, later, reservation."""
 
 import os
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass
 from decimal import Decimal
 from typing import Annotated
 
@@ -60,17 +60,19 @@ class SearchIn(BaseModel):
     stay_days: int | None = Field(None, ge=0)  # None for a one-way trip
 
 
-@dataclass
+@dataclass(frozen=True)
 class Catalog:
+    """Replaced as a whole, never edited, so a search never sees half of a new catalog."""
+
     route: tuple[str, str] | None = None
-    listings: list[Listing] = field(default_factory=list)
+    listings: tuple[Listing, ...] = ()
 
 
 def create_app(
     cache: AvailabilityCache, wash_top: int = 2, reservations: Reservations | None = None
 ) -> FastAPI:
     app = FastAPI(title="api")
-    catalog = Catalog()
+    app.state.catalog = Catalog()  # one assignment swaps it; the endpoints run in threads
 
     @app.exception_handler(ReservationsUnavailableError)
     async def reservations_unavailable(_: Request, __: Exception) -> JSONResponse:
@@ -86,28 +88,31 @@ def create_app(
 
     @app.put("/admin/catalog", status_code=204)
     def put_catalog(body: CatalogIn) -> Response:
-        catalog.route = (body.origin, body.destination)
-        catalog.listings = [
-            Listing(
-                body.flight,
-                item.booking_class,
-                Bundle(
-                    item.name,
-                    item.price,
-                    item.ancillaries,
-                    item.likelihood,
-                    item.overall,
-                ),
-            )
-            for item in body.bundles
-        ]
+        app.state.catalog = Catalog(
+            (body.origin, body.destination),
+            tuple(
+                Listing(
+                    body.flight,
+                    item.booking_class,
+                    Bundle(
+                        item.name,
+                        item.price,
+                        item.ancillaries,
+                        item.likelihood,
+                        item.overall,
+                    ),
+                )
+                for item in body.bundles
+            ),
+        )
         return Response(status_code=204)
 
     @app.post("/search")
     def post_search(body: SearchIn) -> dict:
         segment = segment_trip(body.days_ahead, body.stay_days, body.travelers)
+        catalog: Catalog = app.state.catalog
         on_route = catalog.route == (body.origin, body.destination)
-        result = search(catalog.listings if on_route else [], segment, cache, wash_top)
+        result = search(list(catalog.listings) if on_route else [], segment, cache, wash_top)
         return {
             "segment": segment.value,
             "offers": [asdict(offer) for offer in result.offers],

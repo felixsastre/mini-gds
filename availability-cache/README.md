@@ -4,9 +4,10 @@ A distributor, such as a travel agency system, does not ask the airline every ti
 
 Inspired by airline distribution. The data is invented, and this is not a real distribution system.
 
-## About this project
-
-This is an experiment, made for research and out of curiosity about how airline distribution works. It is not prepared for production use, and it should not be used with real bookings, fares or traffic.
+> [!IMPORTANT]
+> This is a proof of concept, made for research and out of curiosity about how airline
+> distribution works. It is not prepared for production use, and it should not be used
+> with real bookings, fares or traffic.
 
 ## Words used here
 

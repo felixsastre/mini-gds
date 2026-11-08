@@ -2,9 +2,10 @@
 
 The other projects of this repository running together as one small system. A traveler searches for a flight. The answer comes from the airline's own system, through the distributor's copy of availability, with offers chosen by the offer engine. The traveler then reserves a seat, pays within a time limit and gets a ticket. Payment and ticketing are simulated, and the data is invented.
 
-## About this project
-
-This is an experiment, made for research and out of curiosity about how airline distribution works. It is not prepared for production use, and it should not be used with real bookings, fares or traffic.
+> [!IMPORTANT]
+> This is a proof of concept, made for research and out of curiosity about how airline
+> distribution works. It is not prepared for production use, and it should not be used
+> with real bookings, fares or traffic.
 
 ## Words used here
 

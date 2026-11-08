@@ -4,9 +4,10 @@ The model of a booking in airline distribution. It covers the difference between
 
 Inspired by airline distribution. The data is invented, this is not a real reservation system, and the set of flight statuses is simplified.
 
-## About this project
-
-This is an experiment, made for research and out of curiosity about how airline distribution works. It is not prepared for production use, and it should not be used with real bookings, fares or traffic.
+> [!IMPORTANT]
+> This is a proof of concept, made for research and out of curiosity about how airline
+> distribution works. It is not prepared for production use, and it should not be used
+> with real bookings, fares or traffic.
 
 ## Words used here
 

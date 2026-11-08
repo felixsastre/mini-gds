@@ -4,9 +4,10 @@ A miniature airline distribution system, built from small pieces as a portfolio.
 
 Everything uses invented data. It is not a real reservation system and it does not connect to real airline systems.
 
-## About this project
-
-Every project in this repository is an experiment, made for research and out of curiosity about how airline distribution works. None of them is prepared for production use, and none should be used with real bookings, fares or traffic.
+> [!IMPORTANT]
+> Every project in this repository is a proof of concept, made for research and out of
+> curiosity about how airline distribution works. None of them is prepared for production
+> use, and none should be used with real bookings, fares or traffic.
 
 ## How each project is built
 

@@ -4,9 +4,10 @@ An airline sells the seats of a flight cabin at several price levels, called boo
 
 Inspired by airline revenue management. The data is invented, and this is not a real reservation system.
 
-## About this project
-
-This is an experiment, made for research and out of curiosity about how airline distribution works. It is not prepared for production use, and it should not be used with real bookings, fares or traffic.
+> [!IMPORTANT]
+> This is a proof of concept, made for research and out of curiosity about how airline
+> distribution works. It is not prepared for production use, and it should not be used
+> with real bookings, fares or traffic.
 
 ## Words used here
 
